@@ -1,0 +1,208 @@
+﻿<!--Start Header-->
+<div ng-app="NorthwindApp" ng-controller="NorthwindCtrl">
+    <div id="screensaver">
+        <canvas id="canvas"></canvas>
+        <i class="fa fa-lock" id="screen_unlock"></i>
+    </div>
+    <div id="modalbox">
+        <div class="devoops-modal">
+            <div class="devoops-modal-header">
+                <div class="modal-header-name">
+                    <span>Basic table</span>
+                </div>
+                <div class="box-icons">
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="devoops-modal-inner">
+            </div>
+            <div class="devoops-modal-bottom">
+            </div>
+        </div>
+    </div>
+    <header class="navbar">
+        <div class="container-fluid expanded-panel">
+            <div class="row">
+                <div id="logo" class="col-xs-12 col-sm-4">
+                    <a href="/">Northwind Systems</a>
+                </div>
+                <div id="top-panel" class="col-xs-12 col-sm-8">
+                    <div class="row">
+                        <div class="col-xs-8 col-sm-4">
+                            <a href="#" class="show-sidebar">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            <div id="search">
+                                <input type="text" placeholder="search" ng-model="searchText" />
+                                <i class="fa fa-search"></i>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-8 top-panel-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--End Header-->
+    <!--End Breadcrumb-->
+    <!--Start Dashboard 1-->
+    <div id="main" class="container-fluid" style="min-height: 460px;">
+        <div class="row">
+            <div id="sidebar-left"></div>
+            <!--Start Content-->
+            <div id="content" class="col-xs-12 col-sm-12">
+                <div>
+                    <img src="/Content/img/devoops_getdata.gif" class="devoops-getdata" alt="preloader" />
+                </div>
+                <div id="ajax-content">
+
+
+                    <!--Start Breadcrumb-->
+                    <div class="row">
+                        <div id="breadcrumb" class="col-xs-12">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Supplier Manager</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!--End Breadcrumb-->
+                    <!--Start Dashboard 1-->
+                    <div id="dashboard-header" class="row">
+                        <div class="clearfix visible-xs"></div>
+                    </div>
+                    <!--End Dashboard 1-->
+                    <!--Start Dashboard 2-->
+                    <div class="row-fluid">
+                        <div id="dashboard_links" class="col-xs-12 col-sm-2 pull-right">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#" class="tab-link" id="overview">Overview</a></li>
+                                <li><a href="#" class="tab-link" id="clients">Clients</a></li>
+                                <li><a href="#" class="tab-link" id="graph">Statistics</a></li>
+                                <li><a href="#" class="tab-link" id="servers">Servers</a></li>
+                            </ul>
+                        </div>
+                        <div id="dashboard_tabs" class="col-xs-12 col-sm-10">
+                            <!--Start Dashboard Tab 1-->
+                            <div id="dashboard-overview" class="row" style="visibility: visible; position: relative;">
+                                <div id="ow-marketplace" class="col-sm-12 col-md-6">
+                                    <h4 class="page-header">SUPPLIERS (Click row to show supplier's products)</h4>
+                                    <table id="ticker-table" class="table m-table table-bordered table-hover table-heading">
+                                        <thead>
+                                            <tr>
+                                                <th style="cursor: pointer" ng-click="SetOrder('CompanyName')">Name</th>
+                                                <th style="cursor: pointer" ng-click="SetOrder('City')">City</th>
+                                                <th style="cursor: pointer" ng-click="SetOrder('Country')">Country</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat-start="supplier in data.suppliers | filter: searchText | orderBy: orderProp " ng-click="GetSupplierProducts(supplier)">
+                                                <td ng-bind="supplier.CompanyName" style="font-weight: bold;"></td>
+                                                <td ng-bind="supplier.City"></td>
+                                                <td ng-bind="supplier.Country"></td>
+                                                <td ng-click="DeleteSupplier(supplier.SupplierID)"><button class="btn-danger">Delete</button></td>
+                                            </tr>
+                                            <tr ng-repeat-end ng-if="ShowSupplierProducts(supplier)" >
+                                                <td colspan="4" >
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th colspan="3"><span ng-bind="supplier.CompanyName"></span>'s Products</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Product Name</th>
+                                                                <th>Unit Price</th>
+                                                                <th>Discontinued</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="product in supplier.Products | filter: searchText">
+                                                                <td ng-bind="product.ProductName" style="font-weight: bold;"></td>
+                                                                <td ng-bind="product.UnitPrice"></td>
+                                                                <td ng-bind="product.Discontinued"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div id="ow-donut" class="row">
+                                        <div class="col-xs-4">
+                                            <div id="morris_donut_1" style="width:120px;height:120px;"></div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div id="morris_donut_2" style="width:120px;height:120px;"></div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div id="morris_donut_3" style="width:120px;height:120px;"></div>
+                                        </div>
+                                    </div>
+                                    <div id="ow-activity" class="row">
+                                        <div class="col-xs-2 col-sm-1 col-md-2">
+                                            <div class="v-txt">ACTIVITY</div>
+                                        </div>
+                                        <div class="col-xs-7 col-sm-5 col-md-6">
+                                            <div class="row"><i class="fa fa-code"></i> Release published <span class="label label-default pull-right">01:17:34</span></div>
+                                            <div class="row"><i class="fa fa-cloud-upload"></i> Backup created <span class="label label-default pull-right">03:23:34</span></div>
+                                            <div class="row"><i class="fa fa-camera"></i> Snapshot created <span class="label label-default pull-right">04:22:11</span></div>
+                                            <div class="row"><i class="fa fa fa-money"></i> Invoice pay <span class="label label-default pull-right">05:11:51</span></div>
+                                            <div class="row"><i class="fa fa-briefcase"></i> Project edited <span class="label label-default pull-right">04:52:23</span></div>
+                                            <div class="row"><i class="fa fa-floppy-o"></i> Project saved <span class="label label-default pull-right">07:11:01</span></div>
+                                            <div class="row"><i class="fa fa-bug"></i> Bug fixed <span class="label label-default pull-right">09:10:31</span></div>
+                                        </div>
+                                        <div id="ow-stat" class="col-xs-3 col-sm-4 col-md-4 pull-right">
+                                            <div class="row"><small><b>Ow Stat.:</b></small></div>
+                                            <div class="row">&#37;user <sup>20,43</sup></div>
+                                            <div class="row">&#37;nice <sup>1,01</sup></div>
+                                            <div class="row">&#37;system <sup>27,34</sup></div>
+                                            <div class="row">&#37;iowait <sup>2,02</sup></div>
+                                            <div class="row">&#37;steal <sup>1,22</sup></div>
+                                            <div class="row">&#37;idle <sup>47,98</sup></div>
+                                            <div class="row">tps <sup>296546</sup></div>
+                                        </div>
+                                    </div>
+                                    <div id="ow-summary" class="row">
+                                        <div class="col-xs-12">
+                                            <h4 class="page-header">&Sigma; SUMMARY</h4>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row">
+                                                        <div class="col-xs-6">Total commits<b>1245634</b></div>
+                                                        <div class="col-xs-6">Release count<b>227</b></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-6">Tests passed<b>5222345</b></div>
+                                                        <div class="col-xs-6">Tickets solved<b>324322</b></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-6">Active clients<b>52145</b></div>
+                                                        <div class="col-xs-6">Support team<b>288</b></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Dashboard Tab 1-->
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--End Dashboard 2 -->
+                    <div style="height: 40px;"></div>
+
+
+
+                </div>
+            </div>
+            <!--End Content-->
+        </div>
+    </div>
+</div>

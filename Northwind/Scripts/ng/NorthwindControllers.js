@@ -20,7 +20,7 @@
             var supplierHash = {};
             $scope.supplierForm = {};
             $scope.productForm = {};
-
+            $scope.salesData = undefined;
 
             $scope.showAddSupplierModal = false;
             $scope.showDeleteSupplierModal = false;
@@ -202,12 +202,40 @@
                     Suppliers.GetSupplierProducts({ id: pSupplier.SupplierID }, function (pProducts) {
                         pSupplier.Products = pProducts;
                         pSupplier.ProductsToggleOn = true;
+                    })
+                    .$promise.catch(function (err) {
+                        // show error message
+                        $scope.messageText = "Could not get supplier products! " + err.data.ExceptionMessage;
+                        $scope.messageClass = "alert alert-danger";
                     });
                 }
                 else {
                     pSupplier.ProductsToggleOn = !pSupplier.ProductsToggleOn;
                 }
             }
+
+            $scope.GetMonthlySales = function () {
+                Suppliers.MonthlySales(function (sales) {
+                    $scope.salesData = sales;
+                    $scope.chartData = $scope.salesData.filter(function (d) {
+                        return d.OrderMonth == 5 && d.OrderYear == 1997;
+                    });
+                }).$promise.catch(function (err) {
+                    // show error message
+                    $scope.messageText = "Could not get suppliers monthly sales! " + err.data.ExceptionMessage;
+                    $scope.messageClass = "alert alert-danger";
+                });
+            }
+            $scope.GetMonthlySales();
+
+            $scope.chartYFunc = function (d) {
+                return d.MTDOrderDollars;
+            }
+
+            $scope.chartXFunc = function (d) {
+                return d.SupplierID;
+            }
+
 
         }
      ]);   

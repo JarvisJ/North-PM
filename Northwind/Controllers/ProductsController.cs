@@ -14,8 +14,6 @@ namespace Northwind.Controllers
 {
     public class ProductsController : ApiController
     {
-        private NorthwindDbContext db = new NorthwindDbContext();
-
         // GET: api/Products
         public IEnumerable<ProductAPIData> GetProducts()
         {
@@ -40,18 +38,6 @@ namespace Northwind.Controllers
             return ProductsAPIService.AddProduct(value);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
-        private bool ProductExists(int id)
-        {
-            return db.Products.Count(e => e.ProductID == id) > 0;
-        }
     }
 }

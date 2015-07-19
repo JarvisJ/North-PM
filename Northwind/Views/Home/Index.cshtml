@@ -152,14 +152,13 @@
                                             <div class="v-txt">ACTIVITY</div>
                                         </div>
                                         <div class="col-xs-7 col-sm-5 col-md-6">
-                                            <div class="row"><i class="fa fa-code"></i> Release published <span class="label label-default pull-right">01:17:34</span></div>
-                                            <div class="row"><i class="fa fa-cloud-upload"></i> Backup created <span class="label label-default pull-right">03:23:34</span></div>
-                                            <div class="row"><i class="fa fa-camera"></i> Snapshot created <span class="label label-default pull-right">04:22:11</span></div>
-                                            <div class="row"><i class="fa fa fa-money"></i> Invoice pay <span class="label label-default pull-right">05:11:51</span></div>
-                                            <div class="row"><i class="fa fa-briefcase"></i> Project edited <span class="label label-default pull-right">04:52:23</span></div>
-                                            <div class="row"><i class="fa fa-floppy-o"></i> Project saved <span class="label label-default pull-right">07:11:01</span></div>
-                                            <div class="row"><i class="fa fa-bug"></i> Bug fixed <span class="label label-default pull-right">09:10:31</span></div>
-                                        </div>
+                                            <jj-stack-chart jj-data="chartData"
+                                                            jj-x-func="chartXFunc"
+                                                            jj-y-func="chartYFunc"
+                                                            jj-height="400"
+                                                            jj-width="400" />
+
+                                         </div>
                                         <div id="ow-stat" class="col-xs-3 col-sm-4 col-md-4 pull-right">
                                             <div class="row"><small><b>Ow Stat.:</b></small></div>
                                             <div class="row">&#37;user <sup>20,43</sup></div>

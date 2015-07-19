@@ -7,10 +7,11 @@ namespace Northwind.Models
 {
     public class ProductsAPIService
     {
+        private static NorthwindDbContext db = new NorthwindDbContext();
+
         // get all products in the Northwind db
         public static IEnumerable<ProductAPIData> GetAll()
         {
-            NorthwindDbContext db = new NorthwindDbContext();
 
             return db.Products
                 .Select(x => new ProductAPIData
@@ -23,6 +24,33 @@ namespace Northwind.Models
                     })
                 .ToList();
         }
+
+        public static ProductAPIData AddProduct(ProductAPIData nProduct, bool doCommit = true)
+        {
+            if (nProduct.ProductName.Length > 40)
+            {
+                throw new FormatException("ProductName must be less than or equal to 40 characters.");
+            }
+            Product product = db.Products.Add(new Product
+            {
+                ProductName = nProduct.ProductName,
+                SupplierID = nProduct.SupplierID,
+                Discontinued = nProduct.Discontinued
+            });
+
+            if (doCommit)
+            {
+                db.SaveChanges();
+            }
+
+            return new ProductAPIData
+                {
+                    ProductID = product.ProductID,
+                    ProductName = product.ProductName,
+                    SupplierID = product.SupplierID
+                };
+        }
+
 
         // get a single product
         public static ProductAPIData GetProduct(int productID)

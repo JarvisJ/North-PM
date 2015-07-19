@@ -39,8 +39,9 @@ namespace Northwind.Controllers
 
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public SupplierAPIData Put(int id, [FromBody]SupplierAPIData value)
         {
+            return SupplierAPIService.UpdateSupplier(id,value);
         }
 
         // DELETE api/<controller>/5

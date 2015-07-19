@@ -51,7 +51,24 @@
                 $scope.messageText = "";
                 $scope.supplierForm = {};
                 $scope.showAddSupplierModal = true;
+                $scope.addUpdateText = "Add Supplier";
+
+                // set function to add supplier
+                $scope.AddUpdateSupplierFunc = $scope.AddSupplier;
             }
+
+
+            $scope.TriggerUpdateSupplierModal = function (supplier) {
+                $scope.messageText = "";
+                $scope.supplierForm = {};
+                $scope.showAddSupplierModal = true;
+                $scope.supplierForm.Supplier = supplier;
+                $scope.supplierForm.CompanyName = supplier.CompanyName;
+                $scope.addUpdateText = "Update Supplier";
+                // set function to update supplier
+                $scope.AddUpdateSupplierFunc = $scope.UpdateSupplier;
+            }
+
 
             $scope.TriggerAddProductModal = function (supplier) {
                 $scope.messageText = "";
@@ -59,6 +76,31 @@
                 $scope.productForm.Supplier = supplier;
                 $scope.addProductTitle = "Add new product for " + supplier.CompanyName;
                 $scope.showAddProductModal = true;
+            }
+
+            $scope.AddProduct = function () {
+                var newProduct = new Products();
+
+                newProduct.ProductName = $scope.productForm.ProductName;
+                newProduct.SupplierID = $scope.productForm.Supplier.SupplierID;
+                newProduct.Discontinued = false;
+
+                newProduct.$save(function (d) {
+                    $scope.messageText = "Successfully added " + newProduct.ProductName + ".";
+                    $scope.messageClass = "alert alert-success";
+
+                    // add the new supplier to the list
+                    if (supplierHash[newProduct.SupplierID]) {
+                        supplierHash[newProduct.SupplierID].Products.push(d);
+                    }
+
+                    $scope.showAddProductModal = false;
+                })
+                .catch(function (err) {
+                    // show error message
+                    $scope.messageText = "Could not add product! " + err.data.ExceptionMessage;
+                    $scope.messageClass = "alert alert-danger";
+                });
             }
 
             $scope.DeleteSupplierPrompt = function (supplier) {
@@ -104,7 +146,26 @@
 
             }
 
+            $scope.UpdateSupplier = function () {
+                var oldName = $scope.supplierForm.Supplier.CompanyName;
+                $scope.supplierForm.Supplier.CompanyName = $scope.supplierForm.CompanyName;
+
+                Suppliers.Update({ id: $scope.supplierForm.Supplier.SupplierID }, $scope.supplierForm.Supplier, function (d) {
+                    $scope.messageText = "Successfully updated " + oldName + " to " + d.CompanyName + ".";
+                    $scope.messageClass = "alert alert-success";
+
+                    $scope.showAddSupplierModal = false;
+                })
+                .catch(function (err) {
+                    // show error message
+                    $scope.messageText = "Could not update supplier! " + err.data.ExceptionMessage;
+                    $scope.messageClass = "alert alert-danger";
+                });
+            }
+
+
             $scope.AddSupplier = function () {
+
                 var newSupplier = new Suppliers();
                 newSupplier.CompanyName = $scope.supplierForm.CompanyName;
 

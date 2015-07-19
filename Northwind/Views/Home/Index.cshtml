@@ -105,8 +105,9 @@
                                                 <td ng-bind="supplier.CompanyName" style="font-weight: bold;" ng-click="GetSupplierProducts(supplier)"></td>
                                                 <td ng-bind="supplier.City" ng-click="GetSupplierProducts(supplier)"></td>
                                                 <td ng-bind="supplier.Country" ng-click="GetSupplierProducts(supplier)"></td>
+                                                <td ng-click="TriggerUpdateSupplierModal(supplier)"><button class="btn-primary">Update</button></td>
+                                                <td ng-click="TriggerAddProductModal(supplier)"><button class="btn-primary">Add Product</button></td>
                                                 <td ng-click="DeleteSupplierPrompt(supplier)"><button class="btn-danger">Delete</button></td>
-                                                <td ng-click="TriggerAddProductModal(supplier)"><button class="btn-danger">Add Product</button></td>
                                             </tr>
                                             <tr ng-repeat-end ng-if="ShowSupplierProducts(supplier)" >
                                                 <td colspan="4" >
@@ -210,7 +211,7 @@
     </div>
 
     <!-- add supplier modal -->
-    <div jj-modal jj-title="'Add Supplier'" show-modal="showAddSupplierModal">
+    <div jj-modal jj-title="addUpdateText" show-modal="showAddSupplierModal">
         <div>
             <div class="row">
                 <div class="form-group">
@@ -223,7 +224,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-offset-8 col-md-4">
-                        <button class="btn btn-primary" ng-click="AddSupplier()">Add Supplier</button>
+                        <button class="btn btn-primary" ng-click="AddUpdateSupplierFunc()">{{addUpdateText}}</button>
                     </div>
                 </div>
             </div>

@@ -40,7 +40,7 @@ namespace Northwind.Models
                         ProductID = x.ProductID,
                         ProductName = x.ProductName,
                         SupplierID = x.SupplierID,
-                        UnitPrice = x.SupplierID,
+                        UnitPrice = x.UnitPrice,
                         Discontinued = x.Discontinued
                     })
                     .ToList();
@@ -59,6 +59,25 @@ namespace Northwind.Models
             {
                 CompanyName = nSupplier.CompanyName
             });
+
+            if (doCommit)
+            {
+                db.SaveChanges();
+            }
+
+            return new SupplierAPIData(supplier);
+        }
+
+        public static SupplierAPIData UpdateSupplier(int supplierID, SupplierAPIData nSupplier, bool doCommit = true)
+        {
+            if (nSupplier.CompanyName.Length > 40)
+            {
+                throw new FormatException("CompanyName must be less than or equal to 40 characters.");
+            }
+            Supplier supplier = db.Suppliers.Find(supplierID);
+
+            // only update the company name
+            supplier.CompanyName = nSupplier.CompanyName;
 
             if (doCommit)
             {

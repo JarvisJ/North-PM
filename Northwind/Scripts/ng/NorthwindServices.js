@@ -6,7 +6,8 @@
               function ($resource) {
                   return $resource('/api/supplier/:id', {}, {
                       //  query: { method: 'GET', params: {}, isArray: true }
-                      GetSupplierProducts: {method: 'GET', params: { }, url: '/api/supplier/:id/products', isArray: true}
+                      GetSupplierProducts: { method: 'GET', params: {}, url: '/api/supplier/:id/products', isArray: true },
+                      DeleteSupplier: { method: 'DELETE', params: { id: 'id'}  }
                   });
               }])
         .factory('Products', ['$resource',

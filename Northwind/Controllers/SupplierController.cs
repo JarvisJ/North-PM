@@ -31,9 +31,12 @@ namespace Northwind.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        public SupplierAPIData Post([FromBody]SupplierAPIData value)
         {
+            return SupplierAPIService.AddSupplier(value);
         }
+
+
 
         // PUT api/<controller>/5
         public void Put(int id, [FromBody]string value)
@@ -43,6 +46,7 @@ namespace Northwind.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+            SupplierAPIService.DeleteSupplier(id);
         }
     }
 }

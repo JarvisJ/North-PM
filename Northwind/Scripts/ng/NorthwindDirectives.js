@@ -1,16 +1,44 @@
 ﻿(function () {
+    var modalID = 0; // id to prevent conflicts among modal objects
     var NorthwindDirectives = angular.module('NorthwindDirectives', ['ngResource', 'd3']);
-    NorthwindDirectives.directive('ngEnter', function () {
-        return function (scope, element, attrs) {
-            element.bind("keydown keypress", function (event) {
-                if (event.which === 13) {
-                    scope.$apply(function () {
-                        scope.$eval(attrs.ngEnter);
-                    });
 
-                    event.preventDefault();
-                }
-            });
+    // 
+    NorthwindDirectives.directive('jjModal', function () {
+        return {
+            restrict: 'EA',
+            scope: {
+                showModal: '=',
+                jjModalTitle: '=jjTitle'
+            }, 
+            transclude: true,
+            templateUrl: '/Content/ng-partials/Modal.html',
+            replace: true,
+            link: function (scope, element, attrs) {
+                var modalClassID = "jj-modal-id-" + modalID++;
+                var baseRootClass = "modal fade " + modalClassID;
+                scope.modalRootClass = baseRootClass;
+
+
+                scope.hideModal = function () {
+                    scope.showModal = false;
+                };
+
+
+                // Watch for show modal triggered
+                scope.$watch(function () {
+                    return scope.showModal;
+                }, function () {
+                    if (scope.showModal) {
+                        //modalRootClass = baseRootClass;
+                        $('.' + modalClassID).modal({
+                            backdrop: true
+                        });
+                    }
+                    else {
+                        $('.' + modalClassID).modal('hide');
+                    }
+                });
+            }
         };
     });
 

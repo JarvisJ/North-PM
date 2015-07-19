@@ -343,6 +343,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\devoops-style.css" />
+    <Content Include="Content\ng-partials\Modal.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -393,15 +394,12 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ng\angular-resource.js" />
     <Content Include="Scripts\ng\angular.js" />
     <Content Include="Scripts\ng\NorthwindControllers.js" />
     <Content Include="Scripts\ng\NorthwindDirectives.js" />
     <Content Include="Scripts\ng\NorthwindFilters.js" />
     <Content Include="Scripts\ng\NorthwindServices.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

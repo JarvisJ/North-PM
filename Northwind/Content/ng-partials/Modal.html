@@ -1,0 +1,15 @@
+﻿<div >
+    <div ng-class="modalRootClass" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" ng-click="hideModal()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><span ng-bind="jjModalTitle"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <ng-transclude></ng-transclude>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

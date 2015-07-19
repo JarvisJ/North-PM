@@ -89,6 +89,8 @@
                             <!--Start Dashboard Tab 1-->
                             <div id="dashboard-overview" class="row" style="visibility: visible; position: relative;">
                                 <div id="ow-marketplace" class="col-sm-12 col-md-6">
+                                    <span ng-bind="messageText" ng-class="messageClass"></span>
+                                    <button class="btn" data-toggle="modal" ng-click="TriggerAddSupplierModal()">Add Supplier</button>
                                     <h4 class="page-header">SUPPLIERS (Click row to show supplier's products)</h4>
                                     <table id="ticker-table" class="table m-table table-bordered table-hover table-heading">
                                         <thead>
@@ -99,11 +101,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat-start="supplier in data.suppliers | filter: searchText | orderBy: orderProp " ng-click="GetSupplierProducts(supplier)">
-                                                <td ng-bind="supplier.CompanyName" style="font-weight: bold;"></td>
-                                                <td ng-bind="supplier.City"></td>
-                                                <td ng-bind="supplier.Country"></td>
-                                                <td ng-click="DeleteSupplier(supplier.SupplierID)"><button class="btn-danger">Delete</button></td>
+                                            <tr ng-repeat-start="supplier in data.suppliers | filter: searchText | orderBy: orderProp " ng-if="!supplier.IsDeleted">
+                                                <td ng-bind="supplier.CompanyName" style="font-weight: bold;" ng-click="GetSupplierProducts(supplier)"></td>
+                                                <td ng-bind="supplier.City" ng-click="GetSupplierProducts(supplier)"></td>
+                                                <td ng-bind="supplier.Country" ng-click="GetSupplierProducts(supplier)"></td>
+                                                <td ng-click="DeleteSupplierPrompt(supplier)"><button class="btn-danger">Delete</button></td>
+                                                <td ng-click="TriggerAddProductModal(supplier)"><button class="btn-danger">Add Product</button></td>
                                             </tr>
                                             <tr ng-repeat-end ng-if="ShowSupplierProducts(supplier)" >
                                                 <td colspan="4" >
@@ -115,7 +118,7 @@
                                                             <tr>
                                                                 <th>Product Name</th>
                                                                 <th>Unit Price</th>
-                                                                <th>Discontinued</th>
+                                                                <th>Discontinued?</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -203,6 +206,71 @@
                 </div>
             </div>
             <!--End Content-->
+        </div>
+    </div>
+
+    <!-- add supplier modal -->
+    <div jj-modal jj-title="'Add Supplier'" show-modal="showAddSupplierModal">
+        <div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-4">Supplier Name</label>
+                    <div class="col-md-8">
+                        <div class="input-group col-md-12">
+                            <input class="form-control" ng-model="supplierForm.CompanyName" placeholder="Company Name" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-8 col-md-4">
+                        <button class="btn btn-primary" ng-click="AddSupplier()">Add Supplier</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span ng-bind="messageText" ng-class="messageClass"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- add product modal -->
+    <div jj-modal jj-title="addProductTitle" show-modal="showAddProductModal">
+        <div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-4">Product Name</label>
+                    <div class="col-md-8">
+                        <div class="input-group col-md-12">
+                            <input class="form-control" ng-model="productForm.ProductName" placeholder="Product Name" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-8 col-md-4">
+                        <button class="btn btn-primary" ng-click="AddProduct()">Add Product</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span ng-bind="messageText" ng-class="messageClass"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- delete supplier modal -->
+    <div jj-modal jj-title="deleteSupplierTitle" show-modal="showDeleteSupplierModal">
+        <div>
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4">
+                    <button class="btn btn-primary" ng-click="DeleteSupplier(deleteSupplier)">Continue Delete</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary" ng-click="CloseDeleteModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <span ng-bind="messageText" ng-class="messageClass"></span>
         </div>
     </div>
 </div>

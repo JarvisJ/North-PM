@@ -125,7 +125,7 @@
                                                         <tbody>
                                                             <tr ng-repeat="product in supplier.Products | filter: searchText">
                                                                 <td ng-bind="product.ProductName" style="font-weight: bold;"></td>
-                                                                <td ng-bind="product.UnitPrice"></td>
+                                                                <td style="text-align: right" ng-bind="product.UnitPrice | currency"></td>
                                                                 <td ng-bind="product.Discontinued"></td>
                                                             </tr>
                                                         </tbody>

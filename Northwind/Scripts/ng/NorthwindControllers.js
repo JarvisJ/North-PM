@@ -90,11 +90,15 @@
                     $scope.messageClass = "alert alert-success";
 
                     // add the new supplier to the list
-                    if (supplierHash[newProduct.SupplierID]) {
+                    if (supplierHash[newProduct.SupplierID] && supplierHash[newProduct.SupplierID].Products) {
                         supplierHash[newProduct.SupplierID].Products.push(d);
                     }
+                    else if (supplierHash[newProduct.SupplierID]) {
+                        $scope.GetSupplierProducts(supplierHash[newProduct.SupplierID]);
 
+                    }
                     $scope.showAddProductModal = false;
+                    supplierHash[newProduct.SupplierID].ProductsToggleOn = true;
                 })
                 .catch(function (err) {
                     // show error message

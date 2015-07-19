@@ -36,8 +36,6 @@ namespace Northwind.Controllers
             return SupplierAPIService.AddSupplier(value);
         }
 
-
-
         // PUT api/<controller>/5
         public SupplierAPIData Put(int id, [FromBody]SupplierAPIData value)
         {
@@ -48,6 +46,14 @@ namespace Northwind.Controllers
         public void Delete(int id)
         {
             SupplierAPIService.DeleteSupplier(id);
+        }
+
+
+        [HttpGet]
+        [Route("api/supplier/sales")]
+        public IEnumerable<SupplierMonthlySalesAPIData> Sales()
+        {
+            return SupplierAPIService.GetSalesByMonth();
         }
     }
 }

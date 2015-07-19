@@ -427,7 +427,7 @@
         };
     }]);
 
-    NorthwindDirectives.directive('jjStackChart', ['d3Service', '$window', function (d3Service, $window) {
+    NorthwindDirectives.directive('jjStackChart', ['d3Service', '$window', '$filter',function (d3Service, $window,$filter) {
         return {
             restrict: 'EA',
             replace: true,
@@ -494,6 +494,22 @@
 
                         y.domain([0, d3.max(data.map(function (d) { return yFunc(d); }))]);
 
+                        var yAxis = d3.svg.axis()
+                            .scale(y)
+                            .orient("left")
+                            .ticks(5)
+                            .tickFormat($filter('currencynodigits'));
+
+                        // y axis
+                        svg.append("g")
+                            .attr("class", "axis")
+                            .call(yAxis)
+                            .append("text")
+                            .attr("transform", "rotate(-90)")
+                            .attr("y", 6)
+                            .attr("dy", ".5em")
+                            .style("text-anchor", "end")
+                            .text("Time in Minutes");
 
                         svg.selectAll(".bar")
                             .data(data)
@@ -501,25 +517,25 @@
                             .attr("x", function (d) { return x(xFunc(d)); })
                             .attr("width", x.rangeBand())
                             .attr("y", function (d) { return y(yFunc(d)); })
-                      //      .attr("class", barClassFunc)
+                            .attr("class", "hist-bar")
                             .on("mouseover", function (d, i) {
-                                var myBar = d3.select(this);
-                                d.defaultFill = myBar.style("fill");
-                                myBar.style("fill", "#800080");
+                               // var myBar = d3.select(this);
+                              //  d.defaultFill = myBar.style("fill");
+                              //  myBar.style("fill", "#800080");
 
-                                d3.select("body").style("cursor", "pointer");
-                                histSelDiv.style("visibility", "visible");
+                               // d3.select("body").style("cursor", "pointer");
+                               // histSelDiv.style("visibility", "visible");
                                 // .html(getTaskTable([d]));
 
-                                histSelDiv.selectAll("table").remove();
-                                getTaskTable([d], histSelDiv);
+                              //  histSelDiv.selectAll("table").remove();
+                              //  getTaskTable([d], histSelDiv);
                             })
                             .on("mouseout", function (d, i) {
-                                var myBar = d3.select(this);
-                                var curFill = myBar.style("fill");
-                                myBar.style("fill", curFill == "#800080" ? d.defaultFill : curFill);
-                                d3.select("body").style("cursor", "auto");
-                                histSelDiv.style("visibility", "hidden");
+                                //var myBar = d3.select(this);
+                                //var curFill = myBar.style("fill");
+                                //myBar.style("fill", curFill == "#800080" ? d.defaultFill : curFill);
+                                //d3.select("body").style("cursor", "auto");
+                                //histSelDiv.style("visibility", "hidden");
                             })
                             .attr("height", function (d) { return height- y(yFunc(d)); });
 

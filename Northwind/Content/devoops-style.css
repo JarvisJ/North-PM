@@ -1800,6 +1800,7 @@ td.beauty-hover {
 }
 .m-table > thead > tr > th, .m-table > tbody > tr > th, .m-table > tfoot > tr > th, .m-table > thead > tr > td, .m-table > tbody > tr > td, .m-table > tfoot > tr > td {
   vertical-align: middle;
+  text-align: center;
   padding: 2px 5px;
 }
 .m-ticker span {
@@ -2374,5 +2375,5 @@ td.beauty-hover {
 }
 
 .hist-bar:hover {
-  fill: purple;
+  fill: lightgrey;
 }

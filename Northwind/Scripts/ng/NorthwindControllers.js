@@ -25,7 +25,11 @@
             $scope.showAddSupplierModal = false;
             $scope.showDeleteSupplierModal = false;
 
+            $scope.sortOptions = ["By Name", "By Purchases"];
+
             $scope.deleteSupplier = {};
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
             // copy default Model data values for resets
             $scope.orig = angular.copy($scope.data);
@@ -220,6 +224,11 @@
                     $scope.chartData = $scope.salesData.filter(function (d) {
                         return d.OrderMonth == 5 && d.OrderYear == 1997;
                     });
+
+                    $scope.salesMonths = getDistinctMonths($scope.salesData);
+
+                    $scope.changeMonth("1997-5");
+
                 }).$promise.catch(function (err) {
                     // show error message
                     $scope.messageText = "Could not get suppliers monthly sales! " + err.data.ExceptionMessage;
@@ -228,14 +237,89 @@
             }
             $scope.GetMonthlySales();
 
+            $scope.changeMonth = function (mth) {
+                var mthAry = mth.split("-");
+                if (mthAry.length != 2) {
+                    return; // error, did not get month, year
+                }
+
+                $scope.selectedSalesMth = mth;
+
+                var sYear = +mthAry[0];
+                var sMonth = +mthAry[1];
+
+
+                $scope.barChartTitle = $scope.FullMonthYear(mth) + " Purchases by Supplier"
+
+                $scope.chartData = $scope.salesData.filter(function (d) {
+                    return d.OrderMonth == sMonth && d.OrderYear == sYear;
+                });
+            }
+
+            $scope.changeSort = function (sortOpt) {
+                if(sortOpt == "By Name") {
+                    $scope.barChartSortField = "CompanyName";
+                }
+                else if (sortOpt == "By Purchases") {
+                    $scope.barChartSortField = "MTDOrderDollars";
+                }
+                $scope.selectedSortOpt = sortOpt;
+            }
+
             $scope.chartYFunc = function (d) {
                 return d.MTDOrderDollars;
             }
 
             $scope.chartXFunc = function (d) {
-                return d.SupplierID;
+                return d.CompanyName;
             }
 
+            $scope.barChartMouseOver = function (d) {
+                supplierHash[d.SupplierID].rowStyle = {'background-color': 'lightgrey'};
+                $scope.$apply();
+            }
+
+            $scope.barChartMouseOut = function (d) {
+                supplierHash[d.SupplierID].rowStyle = "";
+            }
+
+            $scope.yAxisText = function () {
+                return "Purchases";
+            }
+
+            $scope.FullMonthYear = function(yyyyMM)  {
+                if(!yyyyMM) return;
+                var mthAry = yyyyMM.split("-");
+                if (mthAry.length != 2) {
+                    return; // error, did not get month, year
+                }
+
+                return getMonthName(mthAry[1]) + " " + mthAry[0];
+            }
+
+            function getMonthName(monthNum) {
+                if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) return null;
+
+                return monthNames[monthNum - 1];
+            }
+
+            // generates the data for the month pulldown
+            function getDistinctMonths(allData) {
+                var distinctMonths = {};
+                allData.forEach(function(d) {
+                    if(d.OrderYear > 0 && d.OrderMonth > 0)
+                        distinctMonths[d.OrderYear + "-" + d.OrderMonth] = { OrderYear: d.OrderYear, OrderMonth: d.OrderMonth };
+                })
+  
+
+                return Object.keys(distinctMonths).sort(function (x, y) {
+                    var isGreater;
+                    if (distinctMonths[x].OrderYear == distinctMonths[y].OrderYear) isGreater = distinctMonths[x].OrderMonth > distinctMonths[y].OrderMonth;
+                    else isGreater = distinctMonths[x].OrderYear > distinctMonths[y].OrderYear;
+
+                    return isGreater ? 1 : -1;
+                });;
+            }
 
         }
      ]);   

@@ -66,7 +66,7 @@
                 d3Service.d3().then(function (d3) {
                     var topMargin = parseInt(attrs.jjMargin) || 20,
                         bottomMargin = parseInt(attrs.jjMargin) || 300,
-                        margin = parseInt(attrs.jjMargin) || 60,
+                        margin = parseInt(attrs.jjMargin) || 100,
                         height = parseInt(attrs.jjHeight) - (margin*2) || 500,
                         width = parseInt(attrs.jjWidth)- (margin*2)  || 500,
                         lineField = attrs.jjLineField || undefined,

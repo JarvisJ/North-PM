@@ -9,6 +9,7 @@ These instructions are for deploying the Northwind website on a machine using Vi
 4. Open Northwind.sln in Visual Studio.
 	+ This project was developed in VS 2013. 
 	+ Deployment may be complicated if run on a different version of Visual Studio.
+	+ Eg, you will need to need to install the Entity Framework if running a version of VS prior to 2013.
 5. Modify the connection strings in the web.config file to point to your Northwind database.
 	+ The data source value in the NorthwindDbContext connection string is set to "GALENA-PC\SQLEXPRESS", which will need to be changed.
 6. Click the run/debug button.

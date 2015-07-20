@@ -13,9 +13,9 @@ These instructions are for deploying the Northwind website on a machine using Vi
 	+ The data source value in the NorthwindDbContext connection string is set to "GALENA-PC\SQLEXPRESS", which will need to be changed.
 6. Click the run/debug button.
 
-I do not think anything else needs to be installed on your machine, but it is possible I've overlooked something.
+I do not think anything else needs to be installed on your machine, but please let me know if you run into any difficulties.
 
-The website should be pretty self explanatory. One thing that might get overlooked is the search box at the top of the webpage, which can be used to filter the supplier table.
+The website itself should be fairly self explanatory. One thing that might be overlooked is the search box at the top of the webpage, which can be used to filter the supplier table.
 
 Known Bugs
 ---------------------

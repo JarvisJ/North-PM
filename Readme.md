@@ -7,11 +7,15 @@ These instructions are for deploying the Northwind website on a machine using Vi
 2. Click the "Download Zip" button.
 3. Unzip the downloaded file.
 4. Open Northwind.sln in Visual Studio.
-	+ I developed the project on VS 2013. 
-	+ Deployment could be complicated if run on a different version of Visual Studio.
+	+ This project was developed in VS 2013. 
+	+ Deployment may be complicated if run on a different version of Visual Studio.
 5. Modify the connection strings in the web.config file to point to your Northwind database.
 	+ The data source value in the NorthwindDbContext connection string is set to "GALENA-PC\SQLEXPRESS", which will need to be changed.
 6. Click the run/debug button.
+
+I do not think anything else needs to be installed on your machine, but it is possible I've overlooked something.
+
+The website should be pretty self explanatory. One thing that might get overlooked is the search box at the top of the webpage, which can be used to filter the supplier table.
 
 Known Bugs
 ---------------------

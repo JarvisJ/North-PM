@@ -184,6 +184,7 @@
 
                     // add the new supplier to the list
                     $scope.data.suppliers.push(d);
+                    supplierHash[d.SupplierID] = d;
 
                     $scope.showAddSupplierModal = false;
                 })
@@ -280,7 +281,8 @@
             }
 
             $scope.barChartMouseOut = function (d) {
-                supplierHash[d.SupplierID].rowStyle = "";
+                supplierHash[d.SupplierID].rowStyle = {};
+                $scope.$apply();
             }
 
             $scope.yAxisText = function () {

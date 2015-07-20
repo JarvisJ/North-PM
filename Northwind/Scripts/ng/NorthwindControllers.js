@@ -164,7 +164,7 @@
 
                     $scope.showAddSupplierModal = false;
                 })
-                .catch(function (err) {
+                .$promise.catch(function (err) {
                     // show error message
                     $scope.messageText = "Could not update supplier! " + err.data.ExceptionMessage;
                     $scope.messageClass = "alert alert-danger";
